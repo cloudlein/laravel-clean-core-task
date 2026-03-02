@@ -2,15 +2,15 @@
 
 namespace App\Presentation\Http\Controllers\Auth;
 
-use App\Application\Auth\DTO\RegisterUserData;
-use App\Application\Auth\RegisterUser;
+use App\Application\Auth\DTO\RegisterUserRequest;
+use App\Application\Auth\UseCase\RegisterUserUseCase;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
 
 class RegisterUserController
 {
-    public function __construct(private RegisterUser $registerUser)
+    public function __construct(private RegisterUserUseCase $registerUser)
     {
     }
 
@@ -27,7 +27,7 @@ class RegisterUserController
             'password' => ['required', 'string', 'min:8'],
         ]);
 
-        $dto = new RegisterUserData(
+        $dto = new RegisterUserRequest(
             name: $validated['name'],
             email: $validated['email'],
             password: $validated['password'],

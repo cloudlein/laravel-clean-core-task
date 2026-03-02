@@ -1,17 +1,17 @@
 <?php
 
-namespace App\Application\Auth;
+namespace App\Application\Auth\UseCase;
 
-use App\Application\Auth\DTO\RegisterUserData;
+use App\Application\Auth\DTO\RegisterUserRequest;
 use App\Domain\Users\UserRepository;
 
-class RegisterUser
+class RegisterUserUseCase
 {
     public function __construct(private UserRepository $users)
     {
     }
 
-    public function handle(RegisterUserData $data): object
+    public function handle(RegisterUserRequest $data): object
     {
         return $this->users->create([
             'name' => $data->name,

@@ -2,12 +2,12 @@
 
 namespace App\Application\Auth\DTO;
 
-class LoginUserData
+final class RegisterUserRequest
 {
     public function __construct(
+        public string $name,
         public string $email,
         public string $password,
-    )
-    {
+    ) {
     }
 }

@@ -3,28 +3,23 @@
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <title>Register</title>
+        <title>Edit User</title>
         @vite(['resources/css/app.css', 'resources/js/app.js'])
     </head>
     <body class="bg-[#FDFDFC] min-h-screen flex items-center justify-center">
         <div class="w-full max-w-md bg-white shadow rounded p-6">
-            <h1 class="text-xl font-semibold mb-4">Create User</h1>
+            <h1 class="text-xl font-semibold mb-4">Edit User</h1>
 
-            @if (session('status'))
-                <div class="mb-4 text-green-700 bg-green-100 border border-green-200 px-3 py-2 rounded text-sm">
-                    {{ session('status') }}
-                </div>
-            @endif
-
-            <form method="POST" action="{{ route('users.store') }}" class="space-y-4">
+            <form method="POST" action="{{ route('users.update', $user->id) }}" class="space-y-4">
                 @csrf
+                @method('PUT')
 
                 <div>
                     <label class="block text-sm mb-1">Name</label>
                     <input
                         type="text"
                         name="name"
-                        value="{{ old('name') }}"
+                        value="{{ old('name', $user->name) }}"
                         class="w-full border rounded px-3 py-2 text-sm"
                     >
                     @error('name')
@@ -37,7 +32,7 @@
                     <input
                         type="email"
                         name="email"
-                        value="{{ old('email') }}"
+                        value="{{ old('email', $user->email) }}"
                         class="w-full border rounded px-3 py-2 text-sm"
                     >
                     @error('email')
@@ -51,8 +46,8 @@
                         name="role"
                         class="w-full border rounded px-3 py-2 text-sm bg-white"
                     >
-                        <option value="user" {{ old('role') == 'user' ? 'selected' : '' }}>User</option>
-                        <option value="admin" {{ old('role') == 'admin' ? 'selected' : '' }}>Admin</option>
+                        <option value="user" {{ old('role', $user->role) == 'user' ? 'selected' : '' }}>User</option>
+                        <option value="admin" {{ old('role', $user->role) == 'admin' ? 'selected' : '' }}>Admin</option>
                     </select>
                     @error('role')
                         <p class="text-xs text-red-600 mt-1">{{ $message }}</p>
@@ -60,7 +55,7 @@
                 </div>
 
                 <div>
-                    <label class="block text-sm mb-1">Password</label>
+                    <label class="block text-sm mb-1">Password (Kosongkan jika tidak diubah)</label>
                     <input
                         type="password"
                         name="password"
@@ -77,11 +72,10 @@
                         type="submit"
                         class="bg-black text-white px-4 py-2 rounded text-sm hover:bg-gray-900"
                     >
-                        Create User
+                        Update User
                     </button>
                 </div>
             </form>
         </div>
     </body>
 </html>
-
